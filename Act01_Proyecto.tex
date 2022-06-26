@@ -1,0 +1,159 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[utf8]{inputenc}
+\spanishdecimal{.}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage{kpfonts}
+\usepackage{listings}
+%\usepackage{fontspec}
+\usepackage{float}
+\usepackage{siunitx} %Para el simbolo de ohm
+\usepackage{enumerate}
+\usepackage{array}
+\usepackage{rotating}
+%\usepackage{multicol}
+%\usepackage{multirow}
+%\usepackage{colortbl}d
+\usepackage{pdfpages}
+%\renewcommand{\thesection}{\Roman{section}}
+%\renewcommand{\thesubsection}{\thesection.\Roman{subsection}}
+%\renewcommand{\thesubsubsection}{\thesubsection.\Roman{subsubsection}}
+%\pagenumbering{roman}
+\usepackage{slashbox,pict2e}
+\usepackage{xcolor, colortbl}
+\usepackage{array, multirow, multicol}
+\usepackage{fancyhdr}
+\usepackage{subfigure}
+\usepackage{url}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Universidad Autónoma de Querétaro}
+\lhead{Protocolo de Tesis de Posgrado}
+\cfoot{Page \thepage}
+\lfoot{Facultad de Ingeniería}
+
+\begin{document}
+%\includepdf[pages=-]{Docus/Potada_frontal.pdf}
+
+\begin{titlepage}
+     \centering
+	   \begin{figure}
+            \begin{minipage}{1\linewidth}
+            \centering\centering%\rule{2cm}{2cm}
+%              \caption{Primera figura}
+            \includegraphics[width=0.3\textwidth]{C:/Users/anton/Documents/MCIA/UAQ _MCIA/Sem2_Computo_Evolutivo/Pictures/logos_fi_uaq.png}
+            \end{minipage}
+        \end{figure}
+        
+        {\scshape\LARGE Universidad Autónoma de Querétaro \par}
+	        \vspace{1cm}
+	        
+	    {\scshape\Large División de Investigación y Posgrado \par}
+	        \vspace{1cm}
+	        
+		{\large\bfseries REDUCCIÓN DE RUIDO PERIÓDICO EN IMÁGENES OBTENIDAS POR PERFILOMETRÍA USANDO TÉCNICAS DE APRENDIZAJE PROFUNDO PARA RECONSTRUCCIÓN DE OBJETOS 3D\par}
+		    \vspace{1cm}
+		    
+		{\large Tesis \par}	
+		    \vspace{1cm}
+		    
+%		{\Large\itshape Percolación\par}
+%		    \vspace{1cm}
+		    
+%		Profesor: Dr. Marco Antonio Aceves Fernández \par
+%		\vspace{1.2cm}
+		
+		Presenta:\par  \vspace{0.15cm}
+		
+        Osmar Antonio Espinosa Bernal
+        
+		\vfill
+		% Bottom of the page
+		{\large  25 de febrero de 2022\par}
+		%{\large 10 de Octubre del 2019\par}
+\end{titlepage}
+
+
+\tableofcontents
+%\listoffigures
+%\listoftables
+%\printindex
+
+\newpage
+\section{INTRODUCCIÓN}
+\subsection{Visión por computadora}
+El mundo como se nos presenta puede ser percibido en una amplia gama de formas y colores por nuestros ojos. Así podemos darnos cuenta de que le mundo que nos rodea se no presenta en forma tridimensional con tamaño y profundidad variados. Sin embargo las computadoras que reciben esta información mediante sensores de luz como cámaras son incapaces de leer esta información ya que no detectan la profundidad y ni la forma en algunas situaciones de mala iluminación. Con ayuda de sistemas inteligentes de visión los computadores actuales a sido capaces de leer la información de imágenes para obtener información en 3D y ser capaces de reproducirlos tal y como lo hacen los humanos. Con la intensión de afrontar este desafió, se han desarrollado técnicas que permiten obtener toda la información disponible a partir de imágenes 2D como entrada.
+
+\subsection{Redes neuronales convolucionales}
+Modernas técnicas que permiten extraer la máxima cantidad de información disponible en imágenes 2D con ayuda de Inteligencia Artificial son la redes neuronales (nn). Estas están conformadas por capas de neuronas interconectadas. De acuerdo a la cantidad de capas con que se conforma una red neuronal recibe el nombre de red neuronal de aprendizaje profundo (Deep Learning). Ahora dentro de esta categoría también existen la redes neuronales convolucionales que son capaces de procesar imágenes para obtener de ellas información y así interpretar dichas imágenes ya sea para clasificación o para reconstrucción de imágenes.
+\\\\
+En esta tesis se plantea la reconstrucción de imágenes para ser usados en reconstrucciones 3D mediante el uso perfilometría por deslizamiento de fase. Este trabajo propone un filtro para reducir la presencia de patrones de Moiré en imágenes como un pre-procesamiento para reconstruir imágenes en 3D.
+
+\subsection{Trabajos relacionados}
+La reducción o eliminación de ruido o contaminación en imágenes surgió desde que se pudieron conseguir imágenes por medios artificiales. Sin embargo, no fue hasta que se analizaron las fuentes que producen dicha contaminación así como la manera en como se presentan digitalmente que no se comenzó a trabajar en una forma de eliminar la contaminación o ruido presente en imágenes. 
+\\\\
+Existen diferentes tipos de ruido presentes en imágenes. Así analizando su espectro en el dominio de la frecuencia, se puede identificar el ruido periódico que no es mas que ruido sinusoidal periódico producido por  diferentes fuentes externas y por el mismo procedimiento de adquisición de información. 
+\\\\
+Sin embargo, aunque se identificaban claramente las regiones que provocaban este ruido y se aplicaba un filtro para suprimir o reducir el ruido presente, los costos computacionales eran altos. Asi por ejemplo, la aplicación de un filtro de morfología suave disminuye el ruido y mejora la calidad de la imagen(Zhen, Zhong, Qi \& Quinghua, 2004)\cite{Zhen:Ming}.
+\\\\
+Debido a que el patron de ruido de Moiré tambien se presentaba en microscopía de rayos x de transmisión de barrido (Scanning Transmision X-ray Microscopy (STXM)), introduciendo errores significativos en el analisis de imagenes tanto cuantitativo como cualitativo. Ademas de la complejidad para evitar el patron de ruido de Moiré durante la adquisicion de imagenes,  Wei, (2011)\cite{Wei:Wang}, propuso la introduccion de un metodo de  posprocesamiento para el filtrado de ruido en imagenes STXM. El metodo incluye una deteccion semiautomatica de picos presentes en la amplitud de espectro de Fourier\cite{cite2}.  
+\\\\
+Filtros con umbral adaptativo basados en el dominio de la frecuencia son propuestos para reducir el ruido periódico mediante la determinación adaptativa, la función de umbral para la identificación de áreas con un pico de ruido en el dominio de la frecuencia de una imagen. Después son difuminados por un filtro de mínimos para una restauración en el dominio de la frecuencia de las imágenes. La imagen restaurada en el dominio de la frecuencia se le aplica la transformada de Fourier inversa y operaciones de cambio para reconstruir la imagen final el dominio espacial(Varghese, 2016)\cite{Varghese:}.
+\\\\
+La aplicacion de redes neuronales convolucionales para la restauracion de imagenes  han estado todo el tiempo sin embargo, estaban limitados debido al tamaño de conjunto de entrenamiento disponible y al tamaño de la red considerada. Sin embargo, todo esto cambio cuando en 2012, Krizhevsky,(2012)\cite{Kriz:Suts}, consiguio entrenar una gran red con 8 capas y millones de parametros del conjunto de datos ImageNet con 1 millon de imagenes. Desde entonces, redes neuronales mas grandes y profundas han sido entrenadas desde entonces ademas de diversas aplicaciones tanto para clasificacion, segmentacion y restauracion de imagenes muy utiles para el area de Vision por Computadora\cite{cite1}.
+
+\subsection*{Redes Neuronales Convolucionales (CNN)}
+
+Aunque las redes neuronales convolucionales han existido por mucho tiempo, su éxito era limitado debido al tamaño de los conjuntos de entrenamiento disponibles y el tamaño de la red considerada (Ronnenberg, 2015)\cite{Ronn:Fisc}. Sin embargo el avance se dio por Krizhevsky, (2012)\cite{Kriz:Suts}, debido al entrenamiento supervisado que realizo con una gran red de 5 capas convolucionales. Con los años las aplicaciones de las redes neuronales se diversificaron y se pudieron combinar con otras técnicas para restaurar imágenes afectadas por ruido. Con este fin, Nah, (2017)\cite{Nah:Hyun}, propone una red neuronal convolucional multi-escala que restaura imágenes nítidas de un extremo a otro donde el desenfoque presente es causado por varias fuentes como el movimiento de la cámara o del movimiento del objeto.
+\\\\  
+Los experimentos realizados por Zhang, (2017)\cite{Zhang:Zuo1} demuestran que la integración de los métodos de optimización basados en modelos y aprendizaje discriminatorio, no solo elimina el ruido presente en imágenes sino que también puede ser usado para mejorar el rendimiento en aplicaciones de visión de bajo nivel. Haciendo uso del modelo de aprendizaje discriminatorio para reducción de ruido en imágenes, Zhang, (2017)\cite{Zhang:Zuo} demuestra que haciendo uso del ruido blanco Gaussiano aditivo, su modelo DnCNN es capaz de manejar niveles desconocidos de ruido demostrando que no solo es capaz de mostrar alta efectividad en tareas de eliminación de ruido sino que también puede ser eficientemente implementado haciendo uso de la GPU.
+\\\\
+Utilizando redes neuronales convolucionales multi-resolución, Sun, (2018)\cite{Sun:Yu} logra remover los patrones de Moiré de fotos actuando dentro de las bandas de frecuencia en la que se presenta este ruido periódico consiguiendo de esta manera reducir el ruido periódico que es generado por la interferencia entre los píxeles de una pantalla y los píxeles presentes en el sensor de la cámara.
+\\\\
+Utilizando la técnica de desenvolvimiento de fase con dos cámaras o estéreo con restricciones geométricas y técnicas de aprendiza profundo, Quian, (2020)\cite{Quian:} consigue la utilización integral de todos los datos validos que son obtenidos durante la adquisición de datos, específicamente mediciones de la forma de un objeto 3D. 
+\\\\
+Los métodos utilizados para el preprocesamiento de imágenes para reducir el ruido presente avanzan con gran rapidez, evolucionando y mejorando gracias a los avances tecnológicos, el vertiginoso desarrollo de la inteligencia artificial (IA) y la demanda dentro del área industrial y científico para obtener mejores y mas mediciones precisas  de las superficies generadas por computadora. Sin embargo, al día de hoy la eliminación del ruido periódico generado durante el proceso de adquisición de las imágenes sigue presentando desafíos aún por resolver, sobre todo cuando se aplica a reconstrucción de objetos en 3D, creando áreas de oportunidad para crear técnicas mas sofisticadas basados en redes neuronales convolucionales (CNN). En la tabla 1 se muestran los antecedentes recopilados mas relevantes que se han realizado sobre técnicas para reducir el ruido periódico en imágenes.
+
+\begin{thebibliography}{0}
+
+\bibitem {Zhen:Ming}
+Ji, Z., Ming, Z., Li, Q., \& Wu, Q. (2004). Reducing periodic noise using soft morphology filter. Journal of Electronics (China), 21(2), 159-162.
+
+\bibitem {Wei:Wang}
+Wei, Z., Wang, J., Nichol, H., Wiebe, S. \& Chapman, D., (2011), A Median Gaussian filtering framework for Moire patterns noise removal from X-ray microscopy image., doi:10.1016/j.micron.2011.07.009
+
+\bibitem {Varghese:}
+Varghese J. Adaptive threshold based frequency domain filter for periodic noise reduction. Int J Electron Commun (AEÜ) (2016), \url{http://dx.doi.org/10.1016/j.aeue.2016.10.008}
+
+\bibitem{Kriz:Suts} 
+Krizhevsky, A. Sutskever, I. \& E. Hinton, G., (2012), ImageNet Classification with Deep Convolutional Neural Networks.
+
+\bibitem{Ronn:Fisc}
+Ronneberger, O., Fischer, P., \& Brox, T. (2015, October). U-net: Convolutional networks for biomedical image segmentation. In International Conference on Medical image computing and computer-assisted intervention (pp. 234-241). Springer, Cham.
+
+\bibitem{Nah:Hyun}
+Nah, S., Hyun Kim, T., \& Mu Lee, K. (2017). Deep multi-scale convolutional neural network for dynamic scene deblurring. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 3883-3891).
+
+\bibitem{Zhang:Zuo1} 
+Zhang, K., Zuo, W., Gu, S. and  Zhang, L. (2017). Learning deep CNN denoiser prior for image restoration, in Proc. CVPR, pp. 3929–3938
+    
+\bibitem{Zhang:Zuo} 
+Zhang, K., Zuo, W., Chen, Y., Meng, D. and Zhang, L. (2017). Beyond a Gaussian denoiser: Residual learning of deep CNN for image denoising, IEEE Trans. Image Process., vol. 26, no. 7, pp. 3142–3155.
+
+\bibitem{Sun:Yu}
+Sun, Y., Yu, Y., \& Wang, W. (2018). Moiré photo restoration using multiresolution convolutional neural networks. IEEE Transactions on Image Processing, 27(8), 4160-4172.
+
+\bibitem{Quian:} 
+Quian, J. (2020). Deep-learning-enabled geometric constraints and phase unwrapping for single-shot absolute 3D shape measurement.  APL Photonics 5, 046105. doi: 10.1063/5.0003217
+
+\end{thebibliography}
+
+%\includepdf[pages=-]{Docus/Portada_trasera.pdf}
+
+
+\end{document}
